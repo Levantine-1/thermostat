@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<link rel="stylesheet" href="thermostat_buttons.css">
+<title>THE GREAT LORD OF AIR CONDITIONING</title>
+<meta charset="UTF-8">
+<body>
+
+
+<h1>OMG IT'S HOT TURN ON THE AC</h1>
+
+<div>
+<label for="ttr">Time to run in mintues (5-30):</label>
+<input type="number" id="ttr" name="ttr"
+       min="5" max="30" value="20" >
+
+<button id="runAC_timer" type="submit">Turn on AC</button>
+<button id="AC_OFF" type="submit">Turn off AC</button>
+<div>NOTE: There may be a delay before AC turns on and off due to a cool off lockout period by the thermostat to prevent damage to the AC compressor</div>
+<div>Fans should not have this delay.</div>
+<script>
+    document.getElementById('runAC_timer').onclick = submitRunAC_Timer;
+
+    function submitRunAC_Timer() {
+        const cycle_time = document.querySelector('#ttr').value;
+        const xhr = new XMLHttpRequest();
+        xhr.withCredentials = true;
+
+        xhr.addEventListener("readystatechange", function() {
+        if(this.readyState === 4) {
+            console.log(this.responseText);
+            }
+        });
+
+        xhr.open("POST", "/thermostat/cmd?action=set_ac_timer&cycle_time=" + cycle_time );
+        xhr.setRequestHeader('Content-Type', 'application/json');
+        xhr.send();
+    }
+</script>
+<script>
+    document.getElementById('AC_OFF').onclick = submitRunAC_Timer;
+    function submitRunAC_Timer() {
+        const xhr = new XMLHttpRequest();
+        xhr.withCredentials = true;
+
+        xhr.addEventListener("readystatechange", function() {
+        if(this.readyState === 4) {
+            console.log(this.responseText);
+            }
+        });
+
+        xhr.open("POST", "/thermostat/cmd?action=acOFF");
+        xhr.setRequestHeader('Content-Type', 'application/json');
+        xhr.send();
+    }
+</script>
+</div>
+
+<div>
+    <label for="fan_cycle_time">Turn on fan for:</label>
+    <input type="number" id="fan_cycle_time" name="fan_cycle_time"
+        min="1" max="60" value="5" >
+    <label for="fan_cycle_interval"> minutes, every</label>
+    <input type="number" id="fan_cycle_interval" name="fan_cycle_interval"
+            min="1" max="60" value="30" >minutes
+
+    <button id="set_fan_cycle_interval" type="submit">Set Fan timings</button>
+    <script>
+        document.getElementById('set_fan_cycle_interval').onclick = set_fan_cycle;
+    
+        function set_fan_cycle() {
+            const cycle_time = document.querySelector('#fan_cycle_time').value;
+            const interval = document.querySelector('#fan_cycle_interval').value;
+            const xhr = new XMLHttpRequest();
+            xhr.withCredentials = true;
+    
+            xhr.addEventListener("readystatechange", function() {
+            if(this.readyState === 4) {
+                console.log(this.responseText);
+                }
+            });
+    
+            xhr.open("POST", "/thermostat/cmd?action=set_fan_state&action_type=scheduled&action_state=" + cycle_time + "," + interval);
+            xhr.setRequestHeader('Content-Type', 'application/json');
+            xhr.send();
+        }
+    </script>
+</div>
+
+<div>
+    <button id="FanON" type="submit">Fan ON</button>
+    <button id="FanOFF" type="submit">Fan OFF</button>
+
+    <script>
+        document.getElementById('FanON').onclick = turn_fanON;
+        function turn_fanON() {
+            const xhr = new XMLHttpRequest();
+            xhr.withCredentials = true;
+    
+            xhr.addEventListener("readystatechange", function() {
+            if(this.readyState === 4) {
+                console.log(this.responseText);
+                }
+            });
+    
+            xhr.open("POST", "/thermostat/cmd?action=set_fan_state&action_type=simple&action_state=1");
+            xhr.setRequestHeader('Content-Type', 'application/json');
+            xhr.send();
+        }
+    </script>
+        <script>
+            document.getElementById('FanOFF').onclick = turn_fanOFF;
+            function turn_fanOFF() {
+                const xhr = new XMLHttpRequest();
+                xhr.withCredentials = true;
+        
+                xhr.addEventListener("readystatechange", function() {
+                if(this.readyState === 4) {
+                    console.log(this.responseText);
+                    }
+                });
+        
+                xhr.open("POST", "/thermostat/cmd?action=set_fan_state&action_type=simple&action_state=0");
+                xhr.setRequestHeader('Content-Type', 'application/json');
+                xhr.send();
+            }
+        </script>
+</div>
+
+
+
+</body>
