@@ -1,9 +1,6 @@
-#!flask/bin/python
-from flask import Flask, jsonify, render_template, request, Response, \
-    redirect, url_for, session, flash, send_from_directory, abort
 from logging.handlers import RotatingFileHandler
 from os import path
-import requests, time, logging,configparser, sys, json, sqlite3, os, uuid, schedule, threading
+import time, logging, configparser, sys, json, schedule, threading
 import thermostat_database, thermostat_controller
 
 # Reading config file

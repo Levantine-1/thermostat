@@ -1,10 +1,6 @@
-#!flask/bin/python
-from flask import Flask, jsonify, render_template, request, Response, \
-    redirect, url_for, session, flash, send_from_directory, abort
 from logging.handlers import RotatingFileHandler
 from os import path
-import requests, time, logging,configparser, sys, json, sqlite3, os, uuid, schedule, threading
-import thermostat_database
+import requests, logging, configparser, sys
 
 # Reading config file
 config = configparser.ConfigParser()
@@ -63,6 +59,8 @@ def get_info(info): # info could be 'sensors', 'runtimes', 'info'
     headers = {
         'Content-Type': 'application/x-www-form-urlencoded'
     }
-
+    if config['default']['test_mode'] == 'true':
+        response = requests.Request
+        return response
     response = requests.request("GET", url, headers=headers, data=payload)
     return response.text
