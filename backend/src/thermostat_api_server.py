@@ -65,8 +65,8 @@ def set_thermostat():
         action_type = request.args.get('action_type')
         action_state = request.args.get('action_state')
         new_uuid = str(uuid.uuid4())
-        query_db(task='update', table='fan', data=new_uuid) # Update with new uuid
-        if query_db(task='fetch', table='fan', data='') == new_uuid: # Check to make sure uuid is updated
+        query_db(task='update', table='fan', data=new_uuid)  # Update with new uuid
+        if query_db(task='fetch', table='fan', data='') == new_uuid:  # Check to make sure uuid is updated
             response = fan_controller(my_uuid=new_uuid, action_type=action_type, action_state=action_state)
             return response
 
@@ -77,7 +77,7 @@ def set_thermostat():
 
     elif action == "acOFF":
         l.info("Turning off AC")
-        response = thermostat_control(mode='0', fan='0', heat_temp='60', cool_temp='85') # turn off AC
+        response = thermostat_control(mode='0', fan='0', heat_temp='60', cool_temp='85')  # turn off AC
         l.info(response)
         return response
 
