@@ -1,0 +1,13 @@
+[Unit]
+Description=<Backend API server for python stuff>
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/python3 /opt/thermostat/api_server/thermostat_api_server.py
+User=jenkins
+Group=thermostat
+WorkingDirectory=/opt/thermostat/api_server
+
+[Install]
+WantedBy=multi-user.target
