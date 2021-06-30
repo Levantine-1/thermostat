@@ -38,16 +38,26 @@ def thermostat_control(mode, fan, heat_temp, cool_temp):
                   'heattemp': int(heat_temp),
                   'cooltemp': int(cool_temp),
                   }
-    payload={}
+    payload = {}
     headers = {
       'Content-Type': 'application/x-www-form-urlencoded'
     }
-    response = requests.request("POST", url, headers=headers, data=payload, params=parameters)
-    l.info("Setting Thermostat with: " + response.request.url)
 
-    l.info("Thermostat request sent")
-    return response.text
-    # return "Request sent", 200
+    if config['default']['test_mode'].upper() == 'TRUE':
+        response = requests.Request("POST", url, headers=headers, data=payload, params=parameters)
+        prepared = response.prepare()
+        method = str(prepared.method)
+        url = str(prepared.url)
+        headers = str(prepared.headers)
+        string = "Method: " + method + " Headers: " + headers + " URL: " + url
+        l.info(str(string))
+        return string, 200
+    else:
+        response = requests.request("POST", url, headers=headers, data=payload, params=parameters)
+        l.info("Setting Thermostat with: " + response.request.url)
+        l.info("Thermostat request sent")
+        return response.text
+        # return "Request sent", 200
 
 
 def get_info(info): # info could be 'sensors', 'runtimes', 'info'
@@ -59,8 +69,6 @@ def get_info(info): # info could be 'sensors', 'runtimes', 'info'
     headers = {
         'Content-Type': 'application/x-www-form-urlencoded'
     }
-    if config['default']['test_mode'] == 'true':
-        response = requests.Request
-        return response
+    # No need to set test mode for getting info because it's read only and other processes need this to work.
     response = requests.request("GET", url, headers=headers, data=payload)
     return response.text
