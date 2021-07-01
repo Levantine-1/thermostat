@@ -16,12 +16,12 @@ server {
    proxy_pass http://127.0.0.1:81;
    }
 
-   location /thermostat/status {
-       proxy_pass http://127.0.0.1:5000/thermostat/status;
+   location /thermostat/status/ {
+       proxy_pass http://127.0.0.1:5000/thermostat/status/;
    }
 
-   location /thermostat/cmd {
-       proxy_pass http://127.0.0.1:5000/thermostat/cmd;
+   location /thermostat/cmd/ {
+       proxy_pass http://127.0.0.1:5000/thermostat/cmd/;
    }
 }
 
