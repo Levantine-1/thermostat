@@ -1,22 +1,6 @@
 # Nginx sites-available configuration file for reverse proxy
 
-server {
-   listen 80;
 
-   root /var/www/html/;
-   index index.html index.htm;
-
-   server_name example;
-
-   location / {
-
-   proxy_set_header X-Real-IP $remote_addr;
-   proxy_set_header X-Forwarded-For $remote_addr;
-   proxy_set_header Host $host;
-   proxy_pass http://127.0.0.1:81;
-   }
-
-}
 
 upstream thermostat_api_server{
     server localhost:5000;
