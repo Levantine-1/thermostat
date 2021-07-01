@@ -18,18 +18,18 @@ server {
 
 }
 
-upstream backend{
-    server localhost:8080;
+upstream thermostat_api_server{
+    server localhost:5000;
 }
 
  server {
 
     location /thermostat/cmd/ {
-        proxy_pass http://127.0.0.1:5000/thermostat/cmd/;
+        proxy_pass http://thermostat_api_server/thermostat/cmd/;
     }
 
     location /thermostat/status/ {
-        proxy_pass http://127.0.0.1:5000/thermostat/status/;
+        proxy_pass http://thermostat_api_server/thermostat/status/;
     }
 }
 
