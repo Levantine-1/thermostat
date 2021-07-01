@@ -16,21 +16,22 @@ server {
    proxy_pass http://127.0.0.1:81;
    }
 
-   location /thermostat/status/ {
-       proxy_set_header X-Real-IP $remote_addr;
-       proxy_set_header X-Forwarded-For $remote_addr;
-       proxy_set_header Host $host;
-       proxy_pass http://127.0.0.1:5000/thermostat/status/;
-   }
-
-   location /thermostat/cmd/ {
-       proxy_set_header X-Real-IP $remote_addr;
-       proxy_set_header X-Forwarded-For $remote_addr;
-       proxy_set_header Host $host;
-       proxy_pass http://127.0.0.1:5000/thermostat/cmd/;
-   }
 }
 
+upstream backend{
+    server localhost:8080;
+}
+
+ server {
+
+    location /thermostat/cmd/ {
+        proxy_pass http://127.0.0.1:5000/thermostat/cmd/;
+    }
+
+    location /thermostat/status/ {
+        proxy_pass http://127.0.0.1:5000/thermostat/status/;
+    }
+}
 
 # Below this is broken jenkins stuff that i'm gonna leave a lone for now...
 upstream jenkins {
