@@ -1,17 +1,9 @@
 server {
-        listen 80 default_server;
-        listen [::]:80 default_server;
-
-
-        root /var/www/html;
-
-        index index.html index.htm index.nginx-debian.html;
-
-        server_name _;
-
-        location / {
-                try_files $uri $uri/ =404;
+        location /thermostat/cmd/ {
+                proxy_pass http://localhost:5000/thermostat/cmd/;
         }
 
-
+        location /thermostat/status/ {
+                proxy_pass http://localhost:5000/thermostat/status/;
+        }
 }
