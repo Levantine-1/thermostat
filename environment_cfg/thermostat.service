@@ -1,5 +1,5 @@
 [Unit]
-Description=<Backend API server for python stuff>
+Description=Thermostat service daemon
 After=network.target
 
 [Service]
