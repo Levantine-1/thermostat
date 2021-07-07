@@ -3,7 +3,7 @@ from flask import Flask, jsonify, render_template, request, Response, \
     redirect, url_for, session, flash, send_from_directory, abort
 from logging.handlers import RotatingFileHandler
 from os import path
-import time, logging,configparser, sys, uuid
+import time, logging, configparser, sys, uuid
 import thermostat_database, thermostat_controller, fan_logic, ac_logic
 
 # Reading config file
