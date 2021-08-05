@@ -15,18 +15,7 @@ except IndexError:
         print("No config file found")
 
 # Setup logging
-logfile = config['logging']['logdir'] + "/thermostat_api.log"
-log_lvl = config['logging']['loglevel']
-log_out = config['logging']['log_stream_to_console']
-
-my_handler = RotatingFileHandler(logfile,
-                                 mode='a', maxBytes=5 * 1024 * 1024, backupCount=2, encoding=None, delay=0)
-my_handler.setFormatter(logging.Formatter('%(asctime)s %(levelname)s %(funcName)s (%(lineno)d) %(message)s'))
 l = logging.getLogger(__name__)
-l.setLevel(log_lvl.upper())
-l.addHandler(my_handler)
-if log_out.upper() == 'TRUE':
-    l.addHandler(logging.StreamHandler())
 
 # Global Vars
 db_file = config['database']['db_file']
