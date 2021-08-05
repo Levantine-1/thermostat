@@ -16,7 +16,7 @@ backup_count = int(config.get['logging']['backupCount'])
 my_handler = RotatingFileHandler(logfile, mode='a', maxBytes=max_bytes,
                                  backupCount=backup_count, encoding=None,
                                  delay=False)
-my_handler.setFormatter(logging.Formatter('%(asctime)s %(levelname)s %(funcName)s %(lineno)d %(message)s'))
+my_handler.setFormatter(logging.Formatter('%(asctime)s %(levelname)s %(name)s %(funcName)s %(lineno)d: %(message)s'))
 l = logging.getLogger()
 l.setLevel(log_lvl.upper())
 l.addHandler(my_handler)
