@@ -1,5 +1,3 @@
-from logging.handlers import RotatingFileHandler
-from os import path
 import time, logging, threading
 import thermostat_database, thermostat_controller
 

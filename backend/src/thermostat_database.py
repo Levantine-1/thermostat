@@ -1,24 +1,11 @@
-from logging.handlers import RotatingFileHandler
-from os import path
-import logging, configparser, sys, sqlite3, os
-
-# Reading config file
-config = configparser.ConfigParser()
-config.sections()
-try:
-    if path.exists(sys.argv[1]):
-        config.read(sys.argv[1])
-except IndexError:
-    if path.exists('config.ini'):
-        config.read('config.ini')
-    else:
-        print("No config file found")
+import logging,  sqlite3, os
+import config
 
 # Setup logging
 l = logging.getLogger(__name__)
 
 # Global Vars
-db_file = config['database']['db_file']
+db_file = config.get['database']['db_file']
 
 def configure_SQLite():
     try:

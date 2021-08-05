@@ -1,25 +1,12 @@
-from logging.handlers import RotatingFileHandler
 from os import path
 import requests, logging, configparser, sys
-
-# Reading config file
-config = configparser.ConfigParser()
-config.sections()
-try:
-    if path.exists(sys.argv[1]):
-        config.read(sys.argv[1])
-except IndexError:
-    if path.exists('config.ini'):
-        config.read('config.ini')
-    else:
-        print("No config file found")
+import config
 
 # Setup logging
 l = logging.getLogger(__name__)
 
-
 # Global Vars
-thermostat_host = config['default']['thermostat_host']
+thermostat_host = config.get['default']['thermostat_host']
 
 def thermostat_control(mode, fan, heat_temp, cool_temp):
     url = "http://" + thermostat_host + "/control"
@@ -33,7 +20,7 @@ def thermostat_control(mode, fan, heat_temp, cool_temp):
       'Content-Type': 'application/x-www-form-urlencoded'
     }
 
-    if config['default']['test_mode'].upper() == 'TRUE':
+    if config.get['default']['test_mode'].upper() == 'TRUE':
         response = requests.Request("POST", url, headers=headers, data=payload, params=parameters)
         prepared = response.prepare()
         method = str(prepared.method)

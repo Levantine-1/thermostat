@@ -4,27 +4,14 @@ from flask import Flask, jsonify, render_template, request, Response, \
 from logging.handlers import RotatingFileHandler
 from os import path
 import time, logging, configparser, sys, uuid
-import thermostat_database, thermostat_controller, fan_logic, ac_logic
-
-# Reading config file
-config = configparser.ConfigParser()
-config.sections()
-try:
-    if path.exists(sys.argv[1]):
-        config.read(sys.argv[1])
-except IndexError:
-    if path.exists('config.ini'):
-        config.read('config.ini')
-    else:
-        print("No config file found")
+import config, thermostat_database, thermostat_controller, fan_logic, ac_logic
 
 # Setup logging
-logfile = config['logging']['logfile']
-log_lvl = config['logging']['loglevel']
-log_out = config['logging']['log_stream_to_console']
-max_bytes = int(config['logging']['maxBytes'])
-backup_count = int(config['logging']['backupCount'])
-# log_format = config['logging']['log_format']
+logfile = config.get['logging']['logfile']
+log_lvl = config.get['logging']['loglevel']
+log_out = config.get['logging']['log_stream_to_console']
+max_bytes = int(config.get['logging']['maxBytes'])
+backup_count = int(config.get['logging']['backupCount'])
 
 my_handler = RotatingFileHandler(logfile, mode='a', maxBytes=max_bytes,
                                  backupCount=backup_count, encoding=None,
@@ -41,9 +28,9 @@ l.info("Initializing Levantine's thermostat API backend...")
 # Flask app setup
 l.info("Configuring FLASK...")
 app = Flask(__name__)
-apath_status = config['api_path']['apath_get_status']
-apath_cmd = config['api_path']['apath_send_cmd']
-port = config['default']['port']
+apath_status = config.get['api_path']['apath_get_status']
+apath_cmd = config.get['api_path']['apath_send_cmd']
+port = config.get['default']['port']
 
 # Alias setup
 l.info("Configuring Aliases")
