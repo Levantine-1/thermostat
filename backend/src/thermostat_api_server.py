@@ -4,29 +4,20 @@ from flask import Flask, jsonify, render_template, request, Response, \
 from logging.handlers import RotatingFileHandler
 from os import path
 import time, logging, configparser, sys, uuid
-import thermostat_database, thermostat_controller, fan_logic, ac_logic
-
-# Reading config file
-config = configparser.ConfigParser()
-config.sections()
-try:
-    if path.exists(sys.argv[1]):
-        config.read(sys.argv[1])
-except IndexError:
-    if path.exists('config.ini'):
-        config.read('config.ini')
-    else:
-        print("No config file found")
+import config, thermostat_database, thermostat_controller, fan_logic, ac_logic
 
 # Setup logging
-logfile = config['logging']['logdir'] + "/thermostat_api.log"
-log_lvl = config['logging']['loglevel']
-log_out = config['logging']['log_stream_to_console']
+logfile = config.get['logging']['logfile']
+log_lvl = config.get['logging']['loglevel']
+log_out = config.get['logging']['log_stream_to_console']
+max_bytes = int(config.get['logging']['maxBytes'])
+backup_count = int(config.get['logging']['backupCount'])
 
-my_handler = RotatingFileHandler(logfile,
-                                 mode='a', maxBytes=5 * 1024 * 1024, backupCount=2, encoding=None, delay=0)
-my_handler.setFormatter(logging.Formatter('%(asctime)s %(levelname)s %(funcName)s (%(lineno)d) %(message)s'))
-l = logging.getLogger(__name__)
+my_handler = RotatingFileHandler(logfile, mode='a', maxBytes=max_bytes,
+                                 backupCount=backup_count, encoding=None,
+                                 delay=False)
+my_handler.setFormatter(logging.Formatter('%(asctime)s %(levelname)s %(name)s %(funcName)s %(lineno)d: %(message)s'))
+l = logging.getLogger()
 l.setLevel(log_lvl.upper())
 l.addHandler(my_handler)
 if log_out.upper() == 'TRUE':
@@ -37,8 +28,9 @@ l.info("Initializing Levantine's thermostat API backend...")
 # Flask app setup
 l.info("Configuring FLASK...")
 app = Flask(__name__)
-apath_status = config['api_path']['apath_get_status']
-apath_cmd = config['api_path']['apath_send_cmd']
+apath_status = config.get['api_path']['apath_get_status']
+apath_cmd = config.get['api_path']['apath_send_cmd']
+port = config.get['default']['port']
 
 # Alias setup
 l.info("Configuring Aliases")
@@ -83,20 +75,21 @@ def set_thermostat():
 
     return "No valid action specified", 400
 
+
 # API Routes
 if __name__ == '__main__':
     while 1:
         try:
             thermostat_database.configure_SQLite()
             l.info("Initialization complete, starting front end api flask application.")
-            app.run(debug=True)
+            app.run(debug=True, port=port)
 
         except Exception:
             l.exception("Unable to continue the API server. Restarting in 3 seconds")
             time.sleep(3)
 
 
-#Thermostat modes
+# Thermostat modes
 # 0: Off
 # 1: Heat
 # 2: Cool

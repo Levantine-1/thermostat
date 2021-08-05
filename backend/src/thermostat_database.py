@@ -1,35 +1,11 @@
-from logging.handlers import RotatingFileHandler
-from os import path
-import logging, configparser, sys, sqlite3, os
-
-# Reading config file
-config = configparser.ConfigParser()
-config.sections()
-try:
-    if path.exists(sys.argv[1]):
-        config.read(sys.argv[1])
-except IndexError:
-    if path.exists('config.ini'):
-        config.read('config.ini')
-    else:
-        print("No config file found")
+import logging,  sqlite3, os
+import config
 
 # Setup logging
-logfile = config['logging']['logdir'] + "/thermostat_api.log"
-log_lvl = config['logging']['loglevel']
-log_out = config['logging']['log_stream_to_console']
-
-my_handler = RotatingFileHandler(logfile,
-                                 mode='a', maxBytes=5 * 1024 * 1024, backupCount=2, encoding=None, delay=0)
-my_handler.setFormatter(logging.Formatter('%(asctime)s %(levelname)s %(funcName)s (%(lineno)d) %(message)s'))
 l = logging.getLogger(__name__)
-l.setLevel(log_lvl.upper())
-l.addHandler(my_handler)
-if log_out.upper() == 'TRUE':
-    l.addHandler(logging.StreamHandler())
 
 # Global Vars
-db_file = config['database']['db_file']
+db_file = config.get['database']['db_file']
 
 def configure_SQLite():
     try:
