@@ -12,3 +12,10 @@ except IndexError:
         get.read('config.ini')
     else:
         print("No config file found")
+
+# Global Variables
+timescale_option = get['default']['timescale']
+if timescale_option.upper() == 'SECOND':
+    timescale = 1
+elif timescale_option.upper() == 'MINUTE':
+    timescale = 60

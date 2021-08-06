@@ -1,5 +1,5 @@
 import time, logging, json, schedule, threading
-import thermostat_database, thermostat_controller
+import thermostat_database, thermostat_controller, config
 
 # Setup logging
 l = logging.getLogger(__name__)
@@ -28,7 +28,7 @@ def set_fan_state(state): # Turn fan on or off, state value 1 or 0
 
 def fan_timer_thread(cycle_time): # Runs fan for $x amount of time
     l.info("Turning fan on for " + str(cycle_time) + " minutes.")
-    cycle_time = int(cycle_time) * 60 # Convert minutes to seconds
+    cycle_time = int(cycle_time) * config.timescale
     set_fan_state('1')
     time.sleep(cycle_time)
     l.info("Time's up, turning fan off")
