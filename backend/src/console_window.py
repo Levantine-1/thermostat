@@ -1,4 +1,3 @@
-from tabulate import tabulate
 import logging, json
 import config, thermostat_controller
 
