@@ -1,5 +1,5 @@
 import time, logging, threading
-import thermostat_database, thermostat_controller
+import thermostat_database, thermostat_controller, config
 
 # Setup logging
 l = logging.getLogger(__name__)
@@ -24,7 +24,7 @@ def ac_threads(threadname, myuuid, action_state):
 
 def ac_timer_thread(cycle_time):
     l.info("Turning on AC for " + str(cycle_time) + " minutes.")
-    cycle_time = int(cycle_time) * 60 # convert minutes to seconds
+    cycle_time = int(cycle_time) * config.timescale
     thermostat_control(mode='2', fan='0', heat_temp='60', cool_temp='68')
     time.sleep(cycle_time)
     l.info("Time's up, turning off AC")
