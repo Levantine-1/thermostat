@@ -12,6 +12,9 @@ Features Completed:
 - Web browser based logging
 - Daemonize services with systemd
 - Inject build information into site and link dev tools (jenkins, log, git links)
+- Implement logging inheritance to submodules
+- Implement configuration inheritance
+- Implement test mode with sample data
 
 Features In Progress:
 - Not working on anything at the moment.
