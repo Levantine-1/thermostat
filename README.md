@@ -15,6 +15,11 @@ Features Completed:
 - Implement logging inheritance to submodules
 - Implement configuration inheritance
 - Implement test mode with sample data and time scaler
+- Console window:
+    - Display system status
+        - Show current system status  (what it's doing now)
+        - Show current temp
+
 
 Features In Progress:
 - Not working on anything at the moment.
@@ -30,8 +35,6 @@ Features Desired:
     - Display system status
         - Show current AC schedule
         - Show fan interval settings
-        - Show current system status  (what it's doing now)
-        - Show current temp
     - Display system statistics
         - Show how long system has been running for given day
         - Number of times AC/Fan cycled on and off
