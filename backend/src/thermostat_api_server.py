@@ -32,6 +32,8 @@ apath_status = config.get['api_path']['apath_get_status']
 apath_cmd = config.get['api_path']['apath_send_cmd']
 console_data = config.get['api_path']['console_data']
 port = config.get['default']['port']
+if port != 5000:
+    l.warning("Port is not the default 5000, this may break in prod!")
 
 # Alias setup
 l.info("Configuring Aliases")

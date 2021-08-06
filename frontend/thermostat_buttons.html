@@ -126,21 +126,22 @@
                 xhr.send();
             }
         </script>
+</div>
+<div id=console_window>
 
-    <script>
-        var xhr = typeof XMLHttpRequest != 'undefined' ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
-        xhr.open('get', '/thermostat/console_data', true);
-        xhr.onreadystatechange = function() {
-        if (xhr.readyState == 4 && xhr.status == 200) {
-            document.getElementById("myElement").innerHTML = xhr.responseText;
-            }
+</div>
+<script>
+    var xhr = typeof XMLHttpRequest != 'undefined' ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
+    xhr.open('GET', '/thermostat/console_data', true);
+    xhr.onreadystatechange = function() {
+    if (xhr.readyState == 4 && xhr.status == 200) {
+        document.getElementById("console_window").innerHTML = xhr.responseText;
         }
-        xhr.send();
-    </script>
-</div>
+    }
+    xhr.send();
+</script>
 <div>
-    <button><a href="http://thermostat.levantine.io:8080/job/deploy_thermostat/">Deploy Latest Version</a></button>
+    <br><br><button><a href="http://thermostat.levantine.io:8080/job/deploy_thermostat/">Deploy Latest Version</a></button>
+    <button><a href="/log">View API Logs</a></button>
 </div>
-
-
 </body>
