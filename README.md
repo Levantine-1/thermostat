@@ -38,6 +38,7 @@ Features Desired:
     - Display system statistics
         - Show how long system has been running for given day
         - Number of times AC/Fan cycled on and off
+    - While page is open, continuously update the console
         
 - Expose RPI to world wide web by port forwarding:
     - SSL encryption
