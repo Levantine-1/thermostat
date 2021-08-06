@@ -4,7 +4,7 @@ from flask import Flask, jsonify, render_template, request, Response, \
 from logging.handlers import RotatingFileHandler
 from os import path
 import time, logging, configparser, sys, uuid
-import config, thermostat_database, thermostat_controller, fan_logic, ac_logic
+import config, thermostat_database, thermostat_controller, fan_logic, ac_logic, console_window
 
 # Setup logging
 logfile = config.get['logging']['logfile']
@@ -30,6 +30,7 @@ l.info("Configuring FLASK...")
 app = Flask(__name__)
 apath_status = config.get['api_path']['apath_get_status']
 apath_cmd = config.get['api_path']['apath_send_cmd']
+console_data = config.get['api_path']['console_data']
 port = config.get['default']['port']
 
 # Alias setup
@@ -39,6 +40,12 @@ get_info = thermostat_controller.get_info
 thermostat_control = thermostat_controller.thermostat_control
 fan_controller = fan_logic.fan_controller
 ac_threads = ac_logic.ac_threads
+
+
+@app.route(console_data, methods=['GET'])
+def get_console_data():
+    l.info(request)
+    return console_window.generate_status_console_html()
 
 
 @app.route(apath_status, methods=['GET'])
@@ -78,6 +85,8 @@ def set_thermostat():
 
 # API Routes
 if __name__ == '__main__':
+    # l.info(console_window.generate_status_console_html())
+    # exit(0)
     while 1:
         try:
             thermostat_database.configure_SQLite()

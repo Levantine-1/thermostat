@@ -5,7 +5,7 @@ import config
 l = logging.getLogger(__name__)
 
 # Global Vars
-thermostat_host = config.get['default']['thermostat_host']
+thermostat_host = config.get['thermostat_info']['thermostat_host']
 
 def thermostat_control(mode, fan, heat_temp, cool_temp):
     url = "http://" + thermostat_host + "/control"
