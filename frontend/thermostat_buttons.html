@@ -44,8 +44,14 @@
     <script>document.getElementById('FanOFF').onclick = turn_fanOFF</script>
 </div>
 
-<div id=console_window>
-<script>document.getElementById('console_window').change = get_console_data</script>
+<div id="console_window">
+    <!-- <script>document.getElementById('console_window').onload = get_console_data()</script> -->
+    <script>
+        setInterval("get_console_data()", 1000);
+        function live_console(){
+            $('#console_window').load(location.href)
+        }
+    </script>
 </div>
 
 <div>

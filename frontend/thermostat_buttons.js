@@ -88,7 +88,4 @@ function get_console_data(){
         }
     }
     xhr.send();
-    while (true) {
-        setTimeout(() => { console.log("wtf"); }, 1000);
-    }
 }
