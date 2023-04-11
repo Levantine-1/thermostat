@@ -1,6 +1,6 @@
 #!flask/bin/python
 from flask import Flask, jsonify, render_template, request, Response, \
-    redirect, url_for, session, flash, send_from_directory, abort
+    redirect, url_for, session, flash, send_from_directory, abort, send_from_directory
 from logging.handlers import RotatingFileHandler
 from os import path
 import time, logging, configparser, sys, uuid
@@ -42,6 +42,33 @@ get_info = thermostat_controller.get_info
 thermostat_control = thermostat_controller.thermostat_control
 fan_controller = fan_logic.fan_controller
 ac_threads = ac_logic.ac_threads
+
+
+@app.route('/')
+def index():
+    return send_from_directory('static/html', 'thermostat_buttons.html')
+
+
+@app.route('/thermostat_buttons.css')
+def send_css():
+    return send_from_directory('static/css', 'thermostat_buttons.css')
+
+
+@app.route('/thermostat_buttons.js')
+def send_js():
+    return send_from_directory('static/js', 'thermostat_buttons.js')
+
+
+# @app.route('/static/css/<path:path>')
+# def send_css(path):
+#     l.info("CSS PATH: " + path)
+#     return send_from_directory('static/css', path)
+#
+#
+# @app.route('/static/js/<path:path>')
+# def send_js(path):
+#     l.info("JS PATH: " + path)
+#     return send_from_directory('static/js', path)
 
 
 @app.route(console_data, methods=['GET'])
