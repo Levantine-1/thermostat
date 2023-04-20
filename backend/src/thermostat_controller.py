@@ -1,4 +1,7 @@
-import requests, logging, random
+import logging
+import random
+import requests
+
 import config
 
 # Setup logging
@@ -37,7 +40,7 @@ def thermostat_control(mode, heat_temp, cool_temp):
         # return "Request sent", 200
 
 
-def get_info(info): # info could be 'sensors', 'runtimes', 'info'
+def get_info(info):  # info could be 'sensors', 'runtimes', 'info'
     valid_info_pages = ['sensors', 'runtimes', 'info']
     if info not in valid_info_pages:
         return "Invalid status_page: '" + info + "' - Valid status_page values are 'sensors', 'runtimes', 'info'", 400

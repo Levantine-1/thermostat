@@ -1,13 +1,18 @@
 #!flask/bin/python
-from flask import Flask, jsonify, render_template, request, Response, \
-    redirect, url_for, session, flash, send_from_directory, abort, send_from_directory
+import json
+import logging
+import time
 from logging.handlers import RotatingFileHandler
-from os import path
-import time, logging, configparser, sys, uuid, json
-import config, thermostat_controller, fan_logic, ac_logic, console_window
+
+from flask import Flask, request, send_from_directory
+
+import ac_logic
+import config
+import console_window
+import fan_logic
+import thermostat_controller
 
 # Setup logging
-import state_manager
 
 logfile = config.get['logging']['logfile']
 log_lvl = config.get['logging']['loglevel']

@@ -1,5 +1,8 @@
-import logging, json
-import config, thermostat_controller
+import json
+import logging
+
+import config
+import thermostat_controller
 
 # Setup logging
 l = logging.getLogger(__name__)

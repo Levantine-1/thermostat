@@ -1,5 +1,6 @@
+import configparser
+import sys
 from os import path
-import configparser, sys
 
 # Reading config file
 get = configparser.ConfigParser()

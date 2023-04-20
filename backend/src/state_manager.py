@@ -1,5 +1,7 @@
-import time, logging, json, schedule, threading
-import thermostat_controller, config
+import json
+import logging
+
+import thermostat_controller
 
 # Setup logging
 l = logging.getLogger(__name__)

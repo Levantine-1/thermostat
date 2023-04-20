@@ -1,6 +1,9 @@
-import time, logging, threading
+import logging
+import threading
+
+import config
 import state_manager
-import thermostat_controller, config
+import thermostat_controller
 
 # Setup logging
 l = logging.getLogger(__name__)
