@@ -14,6 +14,31 @@ function submitRunAC_Timer() {
     xhr.send();
 }
 
+document.addEventListener('DOMContentLoaded', () => {
+  const form = document.querySelector('form');
+
+  form.addEventListener('submit', (event) => {
+    event.preventDefault();
+
+    const temperature = document.querySelector('input[name="temperature"]:checked').value;
+    const time = document.querySelector('input[name="time"]:checked').value;
+
+    const data = {
+      temperature: temperature,
+      time: time
+    };
+    fetch('/thermostat/cmd', {
+      method: 'POST',
+      body: JSON.stringify(data)
+    })
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  });
+});
 
 function submit_AC_off() {
     const xhr = new XMLHttpRequest();

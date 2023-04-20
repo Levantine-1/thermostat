@@ -7,10 +7,11 @@ l = logging.getLogger(__name__)
 # Global Vars
 thermostat_host = config.get['thermostat_info']['thermostat_host']
 
-def thermostat_control(mode, fan, heat_temp, cool_temp):
+
+def thermostat_control(mode, heat_temp, cool_temp):
     url = "http://" + thermostat_host + "/control"
     parameters = {'mode': int(mode),
-                  'fan': int(fan),
+                  # 'fan': int(fan), # Disabled as of 2023-04-14 as we're not handing fans anymore. ( add fan back in as a paramter later if you need it)
                   'heattemp': int(heat_temp),
                   'cooltemp': int(cool_temp),
                   }
@@ -45,8 +46,8 @@ def get_info(info): # info could be 'sensors', 'runtimes', 'info'
         if config.get['test_mode']['test_mode_use_sample_data'].upper() == 'TRUE':
             return return_sample_info(info=info)
 
-    l.info("Querying thermostat for live data")
     url = "http://" + thermostat_host + "/query/" + info
+    l.debug("Querying URL: " + url)
     payload = {}
     headers = {
         'Content-Type': 'application/x-www-form-urlencoded'
@@ -57,7 +58,7 @@ def get_info(info): # info could be 'sensors', 'runtimes', 'info'
 
 
 def return_sample_info(info):
-    l.info("Querying sample thermostat data")
+    l.debug("Querying sample thermostat data")
     sample_sensors_data = ['{"sensors":[{"name":"Thermostat","temp":68.0},{"name":"Outdoor","temp":0.0}]}',
                            '{"sensors":[{"name":"Thermostat","temp":72.0},{"name":"Outdoor","temp":68.0}]}',
                            '{"sensors":[{"name":"Thermostat","temp":78.0},{"name":"Outdoor","temp":80.0}]}',
