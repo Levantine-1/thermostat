@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <link rel="stylesheet" href="thermostat_buttons.css">
+  <script src="thermostat_buttons.js"></script>
+  <title>Thermostat Controller</title>
+  <meta charset="UTF-8">
+</head>
+
+<body>
+  <h2>Thermostat Controller</h2>
+  <div>
+    <h4>Temporarily adjusts the thermostat outside of scheduled programming</h4>
+    <form>
+      <fieldset>
+        <legend>Set Thermostat To:</legend>
+        <div class="button-group">
+          <input type="radio" id="temp68" name="temperature" value="68">
+          <label class="button" for="temp68">68°F / 20.0°C</label>
+          <input type="radio" id="temp70" name="temperature" value="70">
+          <label class="button" for="temp70">70°F / 21.1°C</label>
+          <input type="radio" id="temp72" name="temperature" value="72">
+          <label class="button" for="temp72">72°F / 22.2°C</label>
+        </div>
+        <div class="button-group">
+          <input type="radio" id="temp74" name="temperature" value="74">
+          <label class="button" for="temp74">74°F / 23.3°C</label>
+          <input type="radio" id="temp76" name="temperature" value="76">
+          <label class="button" for="temp76">76°F / 24.4°C</label>
+          <input type="radio" id="temp78" name="temperature" value="78">
+          <label class="button" for="temp78">78°F / 25.6°C</label>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>For:</legend>
+        <div class="button-group">
+          <input type="radio" id="time10" name="time" value="10">
+          <label class="button" for="time10">10 Minutes</label>
+          <input type="radio" id="time20" name="time" value="20">
+          <label class="button" for="time20">20 Minutes</label>
+          <input type="radio" id="time30" name="time" value="30">
+          <label class="button" for="time30">30 Minutes</label>
+        </div>
+        <div class="button-group">
+          <input type="radio" id="time40" name="time" value="40">
+          <label class="button" for="time40">40 Minutes</label>
+          <input type="radio" id="time50" name="time" value="50">
+          <label class="button" for="time50">50 Minutes</label>
+          <input type="radio" id="time60" name="time" value="60">
+          <label class="button" for="time60">60 Minutes</label>
+        </div>
+      </fieldset>
+
+      <input type="submit" class="button" value="Submit">
+    </form>
+
+    <button id="AC_OFF" type="submit">AC STOP</button>
+    <script>document.getElementById('AC_OFF').onclick = submit_AC_off</script>
+
+<div>NOTE: There may be a delay before AC turns on and off due to a cool off lockout period by the thermostat to prevent damage to the AC compressor</div>
+</div>
+
+<!-- #NOTE: As of 2023-04-10, we'll be using the internal built in air circulation feature on the thermostat instead of doing this manually.
+<div>Fans should not have this delay.</div>
+<div>
+    <label for="fan_cycle_time">Turn on fan for:</label>
+    <input type="number" id="fan_cycle_time" name="fan_cycle_time"
+        min="1" max="60" value="5" >
+    <label for="fan_cycle_interval"> minutes, every</label>
+    <input type="number" id="fan_cycle_interval" name="fan_cycle_interval"
+            min="1" max="60" value="30" >minutes
+
+    <button id="set_fan_cycle_interval" type="submit">Set Fan timings</button>
+    <script>document.getElementById('set_fan_cycle_interval').onclick = set_fan_cycle</script>
+</div>
+
+<div>
+    <button id="FanON" type="submit">Fan ON</button>
+    <script>document.getElementById('FanON').onclick = turn_fanON</script>
+    <button id="FanOFF" type="submit">Fan OFF</button>
+    <script>document.getElementById('FanOFF').onclick = turn_fanOFF</script>
+</div>
+-->
+
+<h4>Thermostat State</h4>
+<div id="console_window">
+
+    <!-- <script>document.getElementById('console_window').onload = get_console_data()</script> -->
+    <script>
+        get_console_data()
+        setInterval("get_console_data()", 5000);
+        function live_console(){
+            $('#console_window').load(location.href)
+        }
+    </script>
+</div>
+
+<div>
+    <button id="gitRepo"><a href="https://github.com/Levantine-1/thermostat">Project Git Repository</a></button>
+</div>
+</body>

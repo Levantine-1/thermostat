@@ -1,0 +1,35 @@
+body {
+  background-color: #222222; /* very dark gray */
+}
+
+/* Amber text */
+body * {
+  color: #FFBF00;
+}
+
+#console_window {
+  border: 2px solid orange;
+  padding: 10px;
+}
+
+/* Button groups */
+.button-group, #gitRepo, #AC_OFF {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+/* Button styles */
+.button, #gitRepo, #AC_OFF {
+  background-color: transparent;
+  color: #FFBF00;
+  border: 2px solid #FFBF00;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-right: 10px;
+  margin-bottom: 10px;
+  flex: 1;
+  text-align: center;
+
