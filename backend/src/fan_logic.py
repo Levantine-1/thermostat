@@ -1,10 +1,9 @@
 import time, logging, json, schedule, threading
-import thermostat_database, thermostat_controller, config
+import thermostat_controller, config
 
 # Setup logging
 l = logging.getLogger(__name__)
 
-query_db = thermostat_database.query_db
 get_info = thermostat_controller.get_info
 thermostat_control = thermostat_controller.thermostat_control
 

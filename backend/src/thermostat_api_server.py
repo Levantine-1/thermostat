@@ -4,7 +4,7 @@ from flask import Flask, jsonify, render_template, request, Response, \
 from logging.handlers import RotatingFileHandler
 from os import path
 import time, logging, configparser, sys, uuid, json
-import config, thermostat_database, thermostat_controller, fan_logic, ac_logic, console_window
+import config, thermostat_controller, fan_logic, ac_logic, console_window
 
 # Setup logging
 import state_manager
@@ -34,7 +34,6 @@ port = config.get['default']['port']
 
 # Alias setup
 l.info("Configuring Aliases")
-query_db = thermostat_database.query_db
 get_info = thermostat_controller.get_info
 thermostat_control = thermostat_controller.thermostat_control
 fan_controller = fan_logic.fan_controller
@@ -90,7 +89,6 @@ if __name__ == '__main__':
     # exit(0)
     while 1:
         try:
-            thermostat_database.configure_SQLite()
             l.info("Initialization complete, starting front end api flask application.")
             app.run(debug=True, port=port)
 

@@ -1,13 +1,12 @@
 import time, logging, threading
 import state_manager
-import thermostat_database, thermostat_controller, config
+import thermostat_controller, config
 
 # Setup logging
 l = logging.getLogger(__name__)
 
 # Alias setup
 l.info("Configuring Aliases")
-query_db = thermostat_database.query_db
 get_info = thermostat_controller.get_info
 thermostat_control = thermostat_controller.thermostat_control
 
