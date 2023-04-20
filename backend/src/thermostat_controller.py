@@ -7,7 +7,6 @@ import config
 # Setup logging
 l = logging.getLogger(__name__)
 
-# Global Vars
 thermostat_host = config.get['thermostat_info']['thermostat_host']
 
 
@@ -92,5 +91,5 @@ def return_sample_info(info):
     elif info == 'info':
         return sample_info_data[index]
     else:
-        l.exception("Index Error")
+        l.error("Index Error")
         return IndexError
