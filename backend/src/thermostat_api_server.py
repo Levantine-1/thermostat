@@ -9,7 +9,6 @@ from flask import Flask, request, send_from_directory
 import ac_logic
 import config
 import console_window
-import fan_logic
 import thermostat_controller
 
 # Setup logging
@@ -41,7 +40,6 @@ port = config.get['default']['port']
 l.info("Configuring Aliases")
 get_info = thermostat_controller.get_info
 thermostat_control = thermostat_controller.thermostat_control
-fan_controller = fan_logic.fan_controller
 ac_threads = ac_logic.ac_threads
 
 
