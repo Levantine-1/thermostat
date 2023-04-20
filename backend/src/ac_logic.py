@@ -38,22 +38,23 @@ def ac_timer_thread(cycle_time, temperature):
         l.warning("Could not acquire lock. Skipping AC timer thread.")
         return
 
-    l.info("Setting Thermostat to " + str(temperature) + "F for " + str(cycle_time) + " minutes")
     if preserve_state is False:
         state_manager.save_current_state()
     elif preserve_state is True:
         l.info("State is preserved for this iteration. Resetting for next iteration")
         preserve_state = False
 
+    l.info("Setting Thermostat to " + str(temperature) + "F for " + str(cycle_time) + " minutes")
     thermostat_control(mode='2', heat_temp='60', cool_temp=temperature)
     remaining_time = int(cycle_time) * int(config.timescale)
+
     while not current_thread_stop_event.is_set():
         current_thread_stop_event.wait(1)
         if current_thread_stop_event.is_set():
             l.info("Kill signal received")
             break
-        l.info("Remaining Time: " + str(remaining_time))
 
+        l.debug("Remaining Time: " + str(remaining_time))
         if remaining_time < 1:
             if state_manager.state_is_changed() is False:
                 l.info("Resetting thermostat to previous settings")
