@@ -1,0 +1,13 @@
+version: "3.8"
+
+services:
+  thermostat-app:
+    image: thermostat-app
+    build: .
+      context: .
+      dockerfile: ./Dockerfile
+    container_name: thermostat-app
+    expose:
+      - 5005
+    ports:
+      - "5005:5005"

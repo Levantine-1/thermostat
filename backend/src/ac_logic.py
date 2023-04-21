@@ -35,7 +35,7 @@ def ac_timer_thread(cycle_time, temperature):
     thread_running = True
     global preserve_state
 
-    lock_acquired = lock.acquire(blocking=False)
+    lock_acquired = lock.acquire(blocking=False)  # We don't block here, so we can run a bit of logic first.
     if not lock_acquired:
         l.warning("Could not acquire lock. Skipping AC timer thread.")
         return
@@ -50,7 +50,7 @@ def ac_timer_thread(cycle_time, temperature):
     thermostat_control(mode='2', heat_temp='60', cool_temp=temperature)
     remaining_time = int(cycle_time) * int(config.timescale)
 
-    while not current_thread_stop_event.is_set():
+    while not current_thread_stop_event.is_set():  # Instead of a time.sleep, we check for stop event signal on interval
         current_thread_stop_event.wait(1)
         if current_thread_stop_event.is_set():
             l.info("Kill signal received")
